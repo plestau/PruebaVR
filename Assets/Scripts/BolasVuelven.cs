@@ -8,7 +8,6 @@ public class BolasVuelven : MonoBehaviour
     {
         if (other.CompareTag("Bola"))
         {
-            Debug.Log("Bola");
             other.transform.position = destino.position;
             other.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
             other.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
