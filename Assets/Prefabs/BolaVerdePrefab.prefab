@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5694692077126130437}
   - component: {fileID: 3974188549460905145}
   - component: {fileID: 7443242501917737681}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BolaVerdePrefab
   m_TagString: Bola
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ThrowVelocityScale: 1.5
+  m_ThrowVelocityScale: 2.5
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1

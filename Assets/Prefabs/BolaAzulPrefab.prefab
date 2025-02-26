@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 318264029702597280}
   - component: {fileID: 1170920216022424687}
   - component: {fileID: 667278868075925215}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BolaAzulPrefab
   m_TagString: Bola
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ThrowVelocityScale: 1.5
+  m_ThrowVelocityScale: 1.9
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
