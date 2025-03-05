@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     public void TiradaAcertada()
     {
+        Debug.Log("Tiro acertado. Bolos derribados: " + bolosDerribados);
         StartCoroutine(DelayPuntuar());
     }
 
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
 
         puntuacion += bolosDerribados;
         panelPuntuacion.MostrarPanel(puntuacion, bolosDerribados, numeroTurno, numeroTirada);
+        Debug.Log("Puntuación: " + puntuacion);
         if (!delayIniciado)
         {
             delayIniciado = true;
