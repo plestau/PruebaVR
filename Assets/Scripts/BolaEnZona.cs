@@ -35,6 +35,7 @@ public class BolaEnZona : MonoBehaviour
             {
                 if (esZonaBolos)
                 {
+                    Debug.Log("Bola en zona de bolos");
                     GameManager.Instance.TiradaAcertada();
                 }
                 bola.transform.position = destino.position;

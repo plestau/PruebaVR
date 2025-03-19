@@ -13,10 +13,19 @@ public class BolasVuelven : MonoBehaviour
         {
             if (esCanal)
             {
-                gameManager.TiradaFallida();
+                if (gameManager.bolosDerribados > 0)
+                {
+                    Debug.Log("Tirada acertada por canal");
+                    gameManager.TiradaAcertada();
+                }
+                else
+                {
+                    gameManager.TiradaFallida();
+                }
             }
             else if (esFondo)
             {
+                Debug.Log("Tirada acertada por fondo");
                 gameManager.TiradaAcertada();
                 other.transform.position = destino.position;
                 other.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;

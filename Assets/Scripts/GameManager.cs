@@ -6,14 +6,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static PanelPuntuacion panelPuntuacion;
-    private int puntuacion = 0;
-    private int bolosDerribados = 0;
+    internal int puntuacion = 0;
+    internal int bolosDerribados = 0;
     private Turno turnoActual;
     private bool delayIniciado = false;
-    private int numeroTurno = 1;
+    internal int numeroTurno = 1;
     private const int maxTurnos = 10;
-    private int numeroTirada = 1;
+    internal int numeroTirada = 1;
     private Bolo[] bolos;
+
+    public AudioClip sonidoPleno;
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -22,19 +25,20 @@ public class GameManager : MonoBehaviour
 
         if (panelPuntuacion == null)
         {
-            panelPuntuacion = FindObjectOfType<PanelPuntuacion>();
+            panelPuntuacion = FindFirstObjectByType<PanelPuntuacion>();
         }
 
         turnoActual = new Turno();
         bolos = FindObjectsOfType<Bolo>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private IEnumerator DelayMostrarPanel()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         delayIniciado = false;
     }
-    
+
     public void BoloDerribado()
     {
         bolosDerribados++;
@@ -42,29 +46,53 @@ public class GameManager : MonoBehaviour
 
     public void TiradaAcertada()
     {
-        Debug.Log("Tiro acertado. Bolos derribados: " + bolosDerribados);
         StartCoroutine(DelayPuntuar());
     }
 
     private IEnumerator DelayPuntuar()
     {
-        yield return new WaitForSeconds(2);
+
+        yield return new WaitForSeconds(1);
 
         puntuacion += bolosDerribados;
         panelPuntuacion.MostrarPanel(puntuacion, bolosDerribados, numeroTurno, numeroTirada);
-        Debug.Log("Puntuación: " + puntuacion);
+        panelPuntuacion.ActualizarMarcador();
         if (!delayIniciado)
         {
             delayIniciado = true;
             StartCoroutine(DelayMostrarPanel());
         }
+
+        if (bolosDerribados == 10 && numeroTirada == 1)
+        {
+            AccionEspecialPleno();
+        }
+
         numeroTirada++;
         turnoActual.TiradaRealizada();
+    }
+
+    private void AccionEspecialPleno()
+    {
+        if (sonidoPleno != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(sonidoPleno);
+        }
+        // muestra el panel de puntuacion diciendo que es un pleno
+        panelPuntuacion.MostrarPanel(puntuacion, 10/10, numeroTurno, numeroTirada);
+        panelPuntuacion.ActualizarMarcador();
+        if (!delayIniciado)
+        {
+            delayIniciado = true;
+            StartCoroutine(DelayMostrarPanel());
+        }
+        ReiniciarBolos();
     }
 
     public void TiradaFallida()
     {
         panelPuntuacion.MostrarPanel(puntuacion, 0, numeroTurno, numeroTirada);
+        panelPuntuacion.ActualizarMarcador();
         if (!delayIniciado)
         {
             delayIniciado = true;
@@ -73,7 +101,7 @@ public class GameManager : MonoBehaviour
         numeroTirada++;
         turnoActual.TiradaRealizada();
     }
-    
+
     public void SiguienteTurno()
     {
         if (numeroTurno < maxTurnos)
@@ -88,12 +116,12 @@ public class GameManager : MonoBehaviour
             TerminarJuego();
         }
     }
-    
+
     public void ReiniciarBolosDerribados()
     {
         bolosDerribados = 0;
     }
-    
+
     private void ReiniciarBolos()
     {
         foreach (Bolo bolo in bolos)
@@ -101,7 +129,7 @@ public class GameManager : MonoBehaviour
             bolo.ReiniciarBolo();
         }
     }
-    
+
     private void TerminarJuego()
     {
         Debug.Log("Juego terminado. Puntuación final: " + puntuacion);

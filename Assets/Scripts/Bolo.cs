@@ -33,26 +33,23 @@ public class Bolo : MonoBehaviour
     private IEnumerator DesactivarBolo()
     {
         yield return new WaitForSeconds(1);
-        
-        // En lugar de desactivar el bolo, desactivamos la física para evitar problemas
-        rb.isKinematic = true;
+
+        rb.isKinematic = false;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        
-        // Opcionalmente puedes esconderlo en lugar de desactivarlo
+
+        rb.isKinematic = true;
+
         gameObject.SetActive(false);
     }
 
     public void ReiniciarBolo()
     {
-        // Reactivar el objeto antes de moverlo
         gameObject.SetActive(true);
 
-        // Resetear posición y rotación
         transform.position = posicionInicial;
         transform.rotation = rotacionInicial;
 
-        // Resetear física
         rb.isKinematic = false;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;

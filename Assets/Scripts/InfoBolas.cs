@@ -8,7 +8,7 @@ public class InfoBolas : MonoBehaviour
     private Bolas bolaActual;
 
     private Camera cameraMain;
-    public Transform vrController; // Añade una referencia al controlador de VR
+    public Transform vrController;
 
     void Start()
     {
@@ -34,20 +34,8 @@ public class InfoBolas : MonoBehaviour
 
     void DetectBola()
     {
-        if (vrController == null)
-        {
-            Debug.LogWarning("VR Controller is not assigned.");
-            return;
-        }
-
         Ray ray = new Ray(vrController.position, vrController.forward);
         RaycastHit hit;
-
-        // Draw a debug line in the scene
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
-
-        // Log for debugging
-        Debug.Log($"Ray Origin: {ray.origin}, Ray Direction: {ray.direction}");
 
         if (Physics.Raycast(ray, out hit))
         {
@@ -55,16 +43,7 @@ public class InfoBolas : MonoBehaviour
             if (bola != null)
             {
                 bolaActual = bola;
-                Debug.Log($"Bola detected: {bola.peso}, {bola.color}");
             }
-            else
-            {
-                Debug.Log("No Bola component found on the hit object.");
-            }
-        }
-        else
-        {
-            Debug.Log("Raycast did not hit any object.");
         }
     }
 }
